@@ -1,0 +1,1 @@
+CREATE VIEW CustomerCars AS SELECT customer_name,model,price FROM Customers JOIN Cars ON Customers.car_id=Cars.car_id;

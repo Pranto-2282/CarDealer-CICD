@@ -1,0 +1,1 @@
+SELECT * FROM Employee; SELECT * FROM Cars; SELECT * FROM Customers; SELECT * FROM CustomerCars;
