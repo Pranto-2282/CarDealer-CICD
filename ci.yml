@@ -1,0 +1,22 @@
+name: Car Dealer CI
+on:
+  push:
+    branches: [main]
+jobs:
+  mysql-test:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: cardealer
+        ports: ['3306:3306']
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y mysql-client
+      - run: until mysqladmin ping -h127.0.0.1 -uroot -proot --silent; do sleep 2; done
+      - run: mysql -h127.0.0.1 -uroot -proot cardealer < database/create_tables.sql
+      - run: mysql -h127.0.0.1 -uroot -proot cardealer < database/insert_data.sql
+      - run: mysql -h127.0.0.1 -uroot -proot cardealer < database/create_views.sql
+      - run: mysql -h127.0.0.1 -uroot -proot cardealer < database/test_queries.sql
